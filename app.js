@@ -97,7 +97,12 @@ app
   })
 
   .patch((req, res) => {
-    articles.updateOne();
+    articles
+      .updateOne({ title: req.params.articleTitle }, { $set: req.body })
+      .then(res.send("Successfully updated the article"))
+      .catch((err) => {
+        res.send(err);
+      });
   });
 
 app.listen("3000", (req, res) => {
